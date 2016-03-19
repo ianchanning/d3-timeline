@@ -57,7 +57,7 @@ var TimelineChart = function () {
             return groupHeight * (i + 1);
         });
 
-        var groupLabels = svg.selectAll('.group-label').data(data).enter().append('text').attr('class', '.group-label').attr('x', 0).attr('y', function (d, i) {
+        var groupLabels = svg.selectAll('.group-label').data(data).enter().append('text').attr('class', 'group-label').attr('x', 0).attr('y', function (d, i) {
             return groupHeight * i + groupHeight / 2 + 5.5;
         }).attr('dx', '0.5em').text(function (d) {
             return d.label;
@@ -65,7 +65,7 @@ var TimelineChart = function () {
 
         var lineSection = svg.append('line').attr('x1', groupWidth).attr('x2', groupWidth).attr('y1', 0).attr('y2', height).attr('stroke', 'black');
 
-        var groupIntervalItems = svg.selectAll('.item').data(data).enter().append('g').attr('clip-path', 'url(#chart-content)').attr('class', '.item').attr('transform', function (d, i) {
+        var groupIntervalItems = svg.selectAll('.item').data(data).enter().append('g').attr('clip-path', 'url(#chart-content)').attr('class', 'item').attr('transform', function (d, i) {
             return 'translate(0, ' + groupHeight * i + ')';
         }).selectAll('.dot').data(function (d) {
             return d.data.filter(function (_) {
@@ -87,7 +87,7 @@ var TimelineChart = function () {
             return x(d.from);
         });
 
-        var groupDotItems = svg.selectAll('.item').data(data).enter().append('g').attr('clip-path', 'url(#chart-content)').attr('class', '.item').attr('transform', function (d, i) {
+        var groupDotItems = svg.selectAll('.item').data(data).enter().append('g').attr('clip-path', 'url(#chart-content)').attr('class', 'item').attr('transform', function (d, i) {
             return 'translate(0, ' + groupHeight * i + ')';
         }).selectAll('.dot').data(function (d) {
             return d.data.filter(function (_) {
