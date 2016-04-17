@@ -59,7 +59,7 @@ var TimelineChart = function () {
 
         var groupLabels = svg.selectAll('.group-label').data(data).enter().append('text').attr('class', 'group-label').attr('x', 0).attr('y', function (d, i) {
             return groupHeight * i + groupHeight / 2 + 5.5;
-        }).attr('dx', '0.5em').text(function (d) {
+        }).attr('dx', '0.1em').text(function (d) {
             return d.label;
         });
 
@@ -73,17 +73,18 @@ var TimelineChart = function () {
             });
         }).enter();
 
-        var intervalBarHeight = 0.8 * groupHeight;
+        // this is a hack to get the individual heights to match the height of the data count
+        var intervalBarHeight = (1 / (2 * data[0].data.length)) * groupHeight;
         var intervalBarMargin = (groupHeight - intervalBarHeight) / 2;
         var intervals = groupIntervalItems.append('rect').attr('class', 'interval').attr('width', function (d) {
             return x(d.to) - x(d.from);
-        }).attr('height', intervalBarHeight).attr('y', intervalBarMargin).attr('x', function (d) {
+        }).attr('height', intervalBarHeight).attr('y', function (d, i) { return (groupHeight / 7) + (14 * i) - 5; }).attr('x', function (d) {
             return x(d.from);
         });
 
         var intervalTexts = groupIntervalItems.append('text').text(function (d) {
             return d.label;
-        }).attr('fill', 'white').attr('class', 'interval-text').attr('y', groupHeight / 2 + 5).attr('x', function (d) {
+        }).attr('class', 'interval-text').attr('y', function (d, i) { return (groupHeight / 7) + (14 * i) }).attr('x', function (d) {
             return x(d.from);
         });
 
@@ -132,24 +133,24 @@ var TimelineChart = function () {
 
             svg.selectAll('.interval-text').attr('x', function (d) {
                 var positionData = getTextPositionData.call(this, d);
-                if (positionData.upToPosition - groupWidth - 10 < positionData.textWidth) {
-                    return positionData.upToPosition;
-                } else if (positionData.xPosition < groupWidth && positionData.upToPosition > groupWidth) {
-                    return groupWidth;
-                }
+                // if (positionData.upToPosition - groupWidth - 10 < positionData.textWidth) {
+                //     return positionData.upToPosition;
+                // } else if (positionData.xPosition < groupWidth && positionData.upToPosition > groupWidth) {
+                //     return groupWidth;
+                // }
                 return positionData.xPosition;
             }).attr('text-anchor', function (d) {
-                var positionData = getTextPositionData.call(this, d);
-                if (positionData.upToPosition - groupWidth - 10 < positionData.textWidth) {
-                    return 'end';
-                }
+                // var positionData = getTextPositionData.call(this, d);
+                // if (positionData.upToPosition - groupWidth - 10 < positionData.textWidth) {
+                //     return 'end';
+                // }
                 return 'start';
             }).attr('dx', function (d) {
-                var positionData = getTextPositionData.call(this, d);
-                if (positionData.upToPosition - groupWidth - 10 < positionData.textWidth) {
-                    return '-0.5em';
-                }
-                return '0.5em';
+                // var positionData = getTextPositionData.call(this, d);
+                // if (positionData.upToPosition - groupWidth - 10 < positionData.textWidth) {
+                //     return '-0.5em';
+                // }
+                return '0.1em';
             });
 
             function getTextPositionData(d) {
